@@ -11,9 +11,16 @@
 export function convertJsonToKotlin(jsonStr: string, rootClassName: string = "Response"): string {
   let json: any;
   try {
-    json = JSON.parse(jsonStr);
+    // Pre-process to preserve decimal precision (e.g., 20.00 -> "20.00_HAS_DOT")
+    // This allows us to distinguish between 20 and 20.00 after JSON.parse()
+    const markedJsonStr = jsonStr.replace(/([:[,]\s*)(-?\d+\.\d+)(?=\s*[,\]}])/g, '$1"$2_HAS_DOT"');
+    json = JSON.parse(markedJsonStr);
   } catch (e) {
-    return `// Error parsing JSON: ${(e as Error).message}`;
+    try {
+      json = JSON.parse(jsonStr);
+    } catch (e2) {
+      return `// Error parsing JSON: ${(e2 as Error).message}`;
+    }
   }
 
   // Content Scope: If top-level has 'content', use it as the source for the root class
@@ -43,7 +50,12 @@ export function convertJsonToKotlin(jsonStr: string, rootClassName: string = "Re
     if (value === null) return { type: 'Any?' };
     
     const type = typeof value;
-    if (type === 'string') return { type: 'String?' };
+    if (type === 'string') {
+      if (/^-?\d+\.\d+_HAS_DOT$/.test(value)) {
+        return { type: 'Double?' };
+      }
+      return { type: 'String?' };
+    }
     if (type === 'number') {
       if (Number.isInteger(value)) {
         return { type: value > 2147483647 ? 'Long?' : 'Int?' };
