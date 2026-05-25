@@ -20,7 +20,7 @@ function extractIdentifier(line: string): string {
   
   // 2. Line with @ (likely annotation or serialized name)
   if (trimmed.includes('@')) {
-    const words = trimmed.match(/[a-zA-Z][a-zA-Z0-9]*/g);
+    const words = trimmed.match(/[a-z][a-zA-Z0-9]*/g);
     if (words && words.length > 0) return words[words.length - 1];
   }
 

@@ -57,7 +57,10 @@ export function convertJsonToKotlin(jsonStr: string, rootClassName: string = "Re
       return { type: 'String?' };
     }
     if (type === 'number') {
-      return { type: Number.isInteger(value) ? (value > 2147483647 ? 'Long?' : 'Int?') : 'Double?' };
+      if (Number.isInteger(value)) {
+        return { type: value > 2147483647 ? 'Long?' : 'Int?' };
+      }
+      return { type: 'Double?' };
     }
     if (type === 'boolean') return { type: 'Boolean?' };
     
