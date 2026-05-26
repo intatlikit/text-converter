@@ -4,7 +4,7 @@ A specialized utility for developers to convert JSON to Kotlin Data Classes and 
 
 ## Project Overview
 
-- **Main Technologies**: Next.js 15 (App Router), React 19, TypeScript, CSS Modules.
+- **Main Technologies**: Next.js 16 (App Router), React 19, TypeScript, CSS Modules.
 - **Architecture**: A client-side web application where core logic is decoupled into the `lib/` directory.
 - **Core Functionality**:
     - **JSON to Kotlin**: Converts JSON strings into robust Kotlin Data Classes.
@@ -12,7 +12,7 @@ A specialized utility for developers to convert JSON to Kotlin Data Classes and 
 
 ## Building and Running
 
-- **Development**: `npm run dev` (Runs on [http://localhost:3001](http://localhost:3001))
+- **Development**: `npm run dev` (Runs on [http://localhost:3001](http://localhost:3001) with `--webpack`)
 - **Production Build**: `npm run build`
 - **Production Start**: `npm start` (Runs on port 3001)
 - **Linting**: `npm run lint`
@@ -24,6 +24,7 @@ A specialized utility for developers to convert JSON to Kotlin Data Classes and 
 - **Requirements**:
     - **All tests must pass.**
     - **Code coverage must be at least 97%** (Statements/Lines).
+    - **Functions must have 100% coverage.**
 - **Enforcement**: If these conditions are not met, the push is prohibited.
 
 ### Kotlin Generation (`lib/kotlinConverter.ts`)
@@ -33,7 +34,8 @@ A specialized utility for developers to convert JSON to Kotlin Data Classes and 
 - **Naming**: 
     - Arrays are automatically suffixed with `List` (e.g., `items` becomes `itemsList`).
     - Standard headers like `headerResp` and `headerReq` are ignored by default.
-- **Decimal Precision**: The converter attempts to preserve decimal precision (distinguishing between `20` and `20.00`) during parsing.
+- **Decimal Precision**: The converter preserves decimal precision (distinguishing between `20` and `20.00`) by pre-processing the JSON string before parsing.
+- **Content Scope**: If the top-level JSON contains a `content` field, it uses that as the source for the root class.
 
 ### Screaming Snake Conversion (`lib/snakeConverter.ts`)
 - **Extraction**: Can extract identifiers from Kotlin `val` and `var` declarations.

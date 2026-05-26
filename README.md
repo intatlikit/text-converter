@@ -9,14 +9,17 @@ A specialized utility for developers to convert JSON to Kotlin Data Classes and 
 ## ✨ Features
 
 - **JSON to Kotlin**: Automatically generates Kotlin data classes from JSON strings.
-  - Adds `@SerializedName` annotations (GSON).
-  - Handles nested objects and lists.
-  - Automatically appends `List` suffix to array fields.
-  - Supports ignoring standard headers (like `headerResp`/`headerReq`).
+  - **GSON Ready**: Adds `@SerializedName` annotations to every field.
+  - **Null Safety**: All fields are nullable with a default value of `null`.
+  - **Nested Classes**: Generates nested data classes for complex JSON structures.
+  - **List Detection**: Automatically appends `List` suffix to array fields and handles item types.
+  - **Decimal Precision**: Preserves precision (e.g., distinguishing `20` from `20.00`).
+  - **Smart Filtering**: Automatically ignores `headerResp` and `headerReq`.
+  - **Content Scope**: Automatically zooms into the `content` field if present at the top level.
 - **Screaming Snake Case**: Converts text/identifiers to `SCREAMING_SNAKE_CASE("original")` format.
-  - Extracts identifiers from Kotlin `val`/`var` declarations.
-  - Supports bulk conversion.
-- **Sleek UI**: Modern dark-mode interface with glass-morphism effects.
+  - **Kotlin Integration**: Extracts identifiers from Kotlin `val`/`var` declarations and annotations.
+  - **Bulk Support**: Process multiple identifiers separated by spaces or newlines.
+- **Modern UI**: Clean, responsive interface with dark mode support and glass-morphism effects.
 
 ---
 
@@ -49,14 +52,27 @@ Open [http://localhost:3001](http://localhost:3001) in your browser.
 
 ---
 
-## 🛠️ Building for Production
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Library**: React 19
+- **Language**: TypeScript
+- **Styling**: CSS Modules (Vanilla CSS)
+- **Testing**: Vitest with 97%+ coverage requirement
+
+---
+
+## 🧪 Testing
+
+We maintain a high standard for code quality with strict coverage requirements.
 
 ```bash
-npm run build
-npm start
-```
+# Run tests
+npm run test
 
-The production server will also run on **port 3001**.
+# Run tests with coverage report
+npx vitest run --coverage
+```
 
 ---
 
